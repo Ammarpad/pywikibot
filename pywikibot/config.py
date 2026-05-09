@@ -408,7 +408,7 @@ for arg in sys.argv[1:]:
         info('The base directory is ' + base_dir)
         info('The user config file is ' + user_config_file)
         break
-family_files = {}
+family_files: dict[str, str] = {}
 
 
 def register_families_folder(folder_path: str,
