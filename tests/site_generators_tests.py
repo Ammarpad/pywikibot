@@ -286,6 +286,21 @@ class TestSiteGenerators(DefaultSiteTestCase):
             if self.validate_page(page):
                 self.assertFalse(page.isRedirectPage())
 
+    def test_allpages_until(self) -> None:
+        """Test the site.allpages() method with until option."""
+        start, until = 'Python', 'Pywiki'
+        fwd = list(self.site.allpages(start=start, until=until))
+        for page in fwd:
+            if self.validate_page(page):
+                self.assertLessEqual(page.title(), until)
+
+        rev = list(self.site.allpages(start=until, until=start, reverse=True))
+        for page in rev:
+            if self.validate_page(page):
+                self.assertLessEqual(page.title(), until)
+
+        self.assertLength(fwd, rev)
+
     def test_allpages_langlinks_enabled(self) -> None:
         """Test allpages with langlinks enabled."""
         mysite = self.get_site()

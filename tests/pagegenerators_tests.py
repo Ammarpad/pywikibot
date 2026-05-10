@@ -962,6 +962,18 @@ class TestFactoryGenerator(DefaultSiteTestCase):
             self.assertIsInstance(page, pywikibot.Page)
             self.assertEqual(page.namespace(), 0)
 
+    def test_allpages_until(self) -> None:
+        """Test allpages generator."""
+        gf = pagegenerators.GeneratorFactory()
+        self.assertTrue(gf.handle_arg('-start:Python'))
+        self.assertTrue(gf.handle_arg('-until:Pywikibot'))
+        gen = gf.getCombinedGenerator()
+        self.assertIsNotNone(gen)
+        for page in gen:
+            self.assertIsInstance(page, pywikibot.Page)
+            self.assertEqual(page.namespace(), 0)
+            self.assertLessEqual(page.title(), 'Pywikibot')
+
     def test_allpages_ns(self) -> None:
         """Test allpages generator with namespace argument."""
         gf = pagegenerators.GeneratorFactory()
