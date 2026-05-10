@@ -7,7 +7,7 @@ Release 11.3
 * Ignore ``UnicodeDecodeError`` in :meth:`cosmetic_changes.CosmeticChangesToolkit.cleanUpLinks`
   and skip the link in such case (:phab:`T423062`)
 * Update translations (i18n)
-* If *preload* optiom is set in :meth:`pagegenerators.GeneratorFactory.getCombinedGenerator`,
+* If *preload* option is set in :meth:`pagegenerators.GeneratorFactory.getCombinedGenerator`,
   the preloading generators :func:`pagegenerators.PreloadingGenerator` or
   :func:`pagegenerators.DequePreloadingGenerator` are called with the *quiet* option.
 
