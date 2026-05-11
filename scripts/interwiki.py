@@ -1166,7 +1166,7 @@ class Subject(interwiki_graph.Subject):
 
         # Page exists, isn't a redirect, and is a plain link (no section)
         if self.origin is None:
-            # the 1st existig page becomes the origin page, if none was
+            # the 1st existing page becomes the origin page, if none was
             # supplied
             self.origin = page
 
