@@ -1,9 +1,9 @@
-"""Family module for Wikinews."""
 #
-# (C) Pywikibot team, 2005-2025
+# (C) Pywikibot team, 2005-2026
 #
 # Distributed under the terms of the MIT license.
 #
+"""Family module for Wikinews."""
 from __future__ import annotations
 
 from pywikibot import family
