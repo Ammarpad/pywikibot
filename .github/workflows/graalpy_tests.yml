@@ -44,9 +44,13 @@ jobs:
           pip install packaging
           pip install requests
           pip install wikitextparser
-          pip install pytest >= 9.0.3
           pip install pytest-attrib
           pip install coverage
+          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+            pip install "pytest>=9.0.3"
+          else
+            pip install pytest
+          fi
       - name: Generate user files
         run: |
           python -Werror::UserWarning -m pwb generate_user_files -site:${{matrix.site}} -v -debug;
