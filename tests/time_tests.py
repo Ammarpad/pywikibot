@@ -236,7 +236,7 @@ class TestTimestamp(TestCase):
                 Timestamp.fromtimestampformat(mw_ts, strict=True)
 
     def test_add_timedelta(self) -> None:
-        """Test addin a timedelta to a Timestamp."""
+        """Test adding a timedelta to a Timestamp."""
         t1 = Timestamp.nowutc()
         t2 = t1 + timedelta(days=1)
         if t1.month != t2.month:

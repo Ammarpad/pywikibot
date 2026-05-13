@@ -294,7 +294,7 @@ class EventStreams(GeneratorWrapper):
 
         Explanation for the result of the filter function:
 
-        1. ``return data['sever_name'] == 'de.wikipedia.org'``
+        1. ``return data['server_name'] == 'de.wikipedia.org'``
         2. ``return data['type'] in ('edit', 'log')``
         3. ``return data['bot'] is True``
 
@@ -414,7 +414,7 @@ def site_rc_listener(site: BaseSite, total: int | None = None):
         for
     :param total: The maximum number of changes to return
     :return: A recent changes listener configured for given site
-    :raises ModuleNotFoundError: rRequests-sse package installation is
+    :raises ModuleNotFoundError: requests-sse package installation is
         required
     """
     if isinstance(EventSource, ModuleNotFoundError):
