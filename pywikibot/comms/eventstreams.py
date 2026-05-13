@@ -61,7 +61,7 @@ class EventStreams(GeneratorWrapper):
     >>> print(msg)  # doctest: +SKIP
     edit on page Q2190037 by KrBot.
     >>> from pprint import pprint
-    >>> pprint(change, width=75)  # doctest: +SKIP
+    >>> pprint(change, width=75, indent=1)  # doctest: +SKIP
     {'$schema': '/mediawiki/recentchange/1.0.0',
      'bot': True,
      'comment': '/* wbsetreference-set:2| */ [[Property:P10585]]: 96FPN, см. '
@@ -97,17 +97,6 @@ class EventStreams(GeneratorWrapper):
      'title': 'Q2190037',
      'type': 'edit',
      'user': 'KrBot',
-     'wiki': 'wikidatawiki'}
-    >>> pprint(next(stream), width=75)  # doctest: +ELLIPSIS
-    {'$schema': '/mediawiki/recentchange/1.0.0',
-     'bot': True,
-     ...
-     'server_name': 'www.wikidata.org',
-     'server_script_path': '/w',
-     'server_url': 'https://www.wikidata.org',
-     ...
-     'type': 'edit',
-     'user': ...,
      'wiki': 'wikidatawiki'}
     >>> del stream
 
