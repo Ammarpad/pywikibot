@@ -172,7 +172,6 @@ class TestTimestamp(TestCase):
         t2 = Timestamp.fromISOformat(ts1, sep=sep)
         ts2 = t2.isoformat(sep=sep)
         self.assertEqual(t1, t2)
-        self.assertEqual(t1, t2)
         self.assertEqual(ts1, ts2)
         date, sep, time = ts1.partition(sep)
         time = time.rstrip('Z')
