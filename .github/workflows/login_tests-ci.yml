@@ -58,16 +58,13 @@ jobs:
             family: wpbeta
             code: en
             os: ubuntu-22.04
-            experimental: true
           - python-version: '3.9'
             site: false
             family: wpbeta
             code: zh
             os: ubuntu-22.04
-            experimental: true
           - python-version: '3.10'
             site: wikisource:beta
-            experimental: true
           - python-version: '3.9'
             site: wikidata:test
             os: ubuntu-22.04
@@ -78,7 +75,7 @@ jobs:
             os: ubuntu-22.04
           - python-version: '3.10'
             site: wowwiki:uk
-          - python-version: 3
+          - python-version: '3'
             site: wikipedia:de
             os: macOS-latest
     steps:
@@ -100,7 +97,38 @@ jobs:
           pip install mwparserfromhell
           pip install packaging
           pip install requests
+          pip install requests[socks]
+      - name: Configure and start WMCS SOCKS tunnel
+        env:
+          USER: ${{ secrets.WMCS_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          printf "%s" "${{ secrets.WMCS_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keygen -lf ~/.ssh/id_ed25519
+          ssh-keyscan bastion.wmcloud.org >> ~/.ssh/known_hosts
+          ssh \
+            -o StrictHostKeyChecking=accept-new \
+            -o ExitOnForwardFailure=yes \
+            -o ServerAliveInterval=30 \
+            -o ServerAliveCountMax=3 \
+            -o ConnectTimeout=10 \
+            -f -N \
+            -D 127.0.0.1:1080 \
+            -i ~/.ssh/id_ed25519 \
+            "$USER@bastion.wmcloud.org"
+          echo "Socket connection:"
+          ss -lntp | grep 1080 || true
+          echo "Local IP:"
+          curl -s https://api.ipify.org
+          echo "Proxy IP:"
+          curl --proxy socks5h://127.0.0.1:1080 -s https://api.ipify.org
       - name: Generate family files
+        env:
+          HTTP_PROXY: socks5h://127.0.0.1:1080
+          HTTPS_PROXY: socks5h://127.0.0.1:1080
+          ALL_PROXY: socks5h://127.0.0.1:1080
+          NO_PROXY: ""
         run: |
           if  [ ${{matrix.family || 0}} == wpbeta ]; then
             python pwb.py generate_family_file http://${{matrix.code}}.wikipedia.beta.wmcloud.org/ wpbeta y
@@ -128,6 +156,11 @@ jobs:
         id: ci_test
         continue-on-error: true
         timeout-minutes: 2
+        env:
+          HTTP_PROXY: socks5h://127.0.0.1:1080
+          HTTPS_PROXY: socks5h://127.0.0.1:1080
+          ALL_PROXY: socks5h://127.0.0.1:1080
+          NO_PROXY: ""
         run: |
           python pwb.py version
           coverage run -m unittest -vv tests/site_login_logout_tests.py
@@ -141,4 +174,5 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Check on failure
         if: steps.ci_test.outcome == 'failure'
-        run: exit 1
+        run: |-
+          exit 1
