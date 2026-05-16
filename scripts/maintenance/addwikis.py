@@ -77,7 +77,7 @@ def combine_codes(codes: set[str], /, *, attr='codes', style='{}') -> str:
     return text
 
 
-def update_known_codes(families: list[str]) -> set[str]:
+def update_known_codes(families: list[str]) -> None:
     """Collect all codes from all families and update Family.known_codes.
 
     .. version-added:: 11.3
