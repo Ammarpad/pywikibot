@@ -22,7 +22,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [pypy3.9, pypy3.11, '3.9', '3.10', '3.11', '3.12', '3.13', '3.14', 3.15-dev]
+        python-version:
+          - pypy3.9
+          - pypy3.11
+          - '3.9'
+          - '3.10'
+          - '3.11'
+          - '3.12'
+          - '3.13'
+          - '3.14'
+          - 3.15-dev
         family: [wikipedia]
         code: [test]
         domain: [test.wikipedia.org]
@@ -77,7 +86,6 @@ jobs:
         if: ${{ matrix.family == 'wpbeta' }}
         run: |
           python pwb.py generate_family_file http://${{matrix.code}}.wikipedia.beta.wmcloud.org/ wpbeta y
-
       - name: Generate user files
         run: |
           python -Werror::UserWarning -m pwb generate_user_files  \
@@ -101,7 +109,6 @@ jobs:
           CS: ${{ steps.split.outputs._1 }}
           AK: ${{ steps.split.outputs._2 }}
           AS: ${{ steps.split.outputs._3 }}
-
       - name: Oauth tests with unittest
         timeout-minutes: 8
         env:
