@@ -110,6 +110,8 @@ jobs:
           AK: ${{ steps.split.outputs._2 }}
           AS: ${{ steps.split.outputs._3 }}
       - name: Oauth tests with unittest
+        id: ci_test
+        continue-on-error: true
         timeout-minutes: 8
         env:
           PYWIKIBOT_TEST_WRITE: 1
@@ -126,3 +128,6 @@ jobs:
         uses: codecov/codecov-action@v6
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Check on failure
+        if: steps.ci_test.outcome == 'failure'
+        run: exit 1

@@ -125,6 +125,8 @@ jobs:
           echo "password_file = os.path.expanduser('passwordfile')" >> user-config.py
           echo "('${{ env.PYWIKIBOT_USERNAME }}', '${{ secrets.PYWIKIBOT_USERPWD }}')" > passwordfile
       - name: Login test with unittest
+        id: ci_test
+        continue-on-error: true
         timeout-minutes: 2
         run: |
           python pwb.py version
@@ -137,3 +139,6 @@ jobs:
         uses: codecov/codecov-action@v6
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Check on failure
+        if: steps.ci_test.outcome == 'failure'
+        run: exit 1
