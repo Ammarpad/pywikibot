@@ -1087,6 +1087,10 @@ class SearchTestCase(DefaultSiteTestCase):
             if e.code == 'gsrsearch-text-disabled':
                 self.skipTest(
                     'gsrsearch is disabled on site {mysite}:\n{e!r}')
+            if (e.code == 'cirrussearch-backend-error'
+                    and mysite.family.name == 'wbbeta'):  # T426529
+                self.skipTest(
+                    f'cirrussearch-backend-error on site {mysite}:\n{e!r}')
             raise
 
     def test_search_where_title(self) -> None:
@@ -1101,9 +1105,16 @@ class SearchTestCase(DefaultSiteTestCase):
             gsrwhat=['title'],
         )
         self.assertEqual(search_gen.request._params, expected_params)
-        for hit in search_gen:
-            self.assertIsInstance(hit, pywikibot.Page)
-            self.assertEqual(hit.namespace(), 0)
+        try:
+            for hit in search_gen:
+                self.assertIsInstance(hit, pywikibot.Page)
+                self.assertEqual(hit.namespace(), 0)
+        except APIError as e:  # pragma: no cover
+            if (e.code == 'cirrussearch-backend-error'
+                    and self.site.family.name == 'wbbeta'):  # T426529
+                self.skipTest(
+                    f'cirrussearch-backend-error on site {self.site}:\n{e!r}')
+            raise
 
 
 class TestUserContribsAsUser(DefaultSiteTestCase):
