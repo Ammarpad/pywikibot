@@ -984,12 +984,9 @@ class GeneratorsMixin:
         :param content: If True, load the current content of each
             iterated page (default False).
         :param until: Optional page title to stop enumerating at; only
-            meaningful when used together with *start*.
-
-            .. note:: The given argument must be lexically higher than
-               the *start* argument if *reverse* is False; otherwise it
-               must be lower.
-
+            meaningful when used together with *start*. The given
+            argument must be lexically higher than the *start* argument
+            if *reverse* is False; otherwise it must be lower.
         :raises KeyError: The namespace identifier was not resolved
         :raises TypeError: The namespace identifier has an inappropriate
             type such as bool, or an iterable with more than one

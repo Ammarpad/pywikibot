@@ -1,6 +1,9 @@
 Release 11.3
 ============
 
+* Add *until* parameter to :meth:`Site.allpages()
+  <pywikibot.site._generators.GeneratorsMixin.allpages>` and add ``-until`` option to
+  :ref:`Generator Options` as a stop title for enumeration (:phab:`T425882`)
 * Update :attr:`family.WikimediaFamily.known_codes` (:phab:`T426319`)
 * Move all :mod:`families.wikinews_family` site codes to :attr:`Family.closed_wikis
   <families.wikinews_family.Family.closed_wikis>` (:phab:`T425953`, :phab:`T426022`)
