@@ -1795,7 +1795,7 @@ class TestBacklinks(TestCase):
         self.assertLength(self.nofollow, 1)
 
     def test_backlinks_redirects_status(self) -> None:
-        """Test backlinks redirects statur."""
+        """Test backlinks redirects status."""
         for page in self.backlinks:
             self.assertTrue(page.isRedirectPage())
         for page in self.references:
