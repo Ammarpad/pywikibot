@@ -1088,7 +1088,7 @@ class SearchTestCase(DefaultSiteTestCase):
                 self.skipTest(
                     'gsrsearch is disabled on site {mysite}:\n{e!r}')
             if (e.code == 'cirrussearch-backend-error'
-                    and mysite.family.name == 'wbbeta'):  # T426529
+                    and mysite.family.name == 'wpbeta'):  # T426529
                 self.skipTest(
                     f'cirrussearch-backend-error on site {mysite}:\n{e!r}')
             raise
@@ -1111,7 +1111,7 @@ class SearchTestCase(DefaultSiteTestCase):
                 self.assertEqual(hit.namespace(), 0)
         except APIError as e:  # pragma: no cover
             if (e.code == 'cirrussearch-backend-error'
-                    and self.site.family.name == 'wbbeta'):  # T426529
+                    and self.site.family.name == 'wpbeta'):  # T426529
                 self.skipTest(
                     f'cirrussearch-backend-error on site {self.site}:\n{e!r}')
             raise
