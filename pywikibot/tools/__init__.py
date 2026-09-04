@@ -434,7 +434,7 @@ class MediaWikiVersion:
 
     """Version object to allow comparing 'wmf' versions with normal ones.
 
-    The version mainly consist of digits separated by periods. After
+    The version mainly consists of digits separated by periods. After
     that is a suffix which may only be 'wmf<number>', 'alpha',
     'beta<number>' or '-rc.<number>' (the - and . are optional). They
     are considered from old to new in that order with a version number

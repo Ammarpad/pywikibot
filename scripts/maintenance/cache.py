@@ -80,7 +80,7 @@ from random import sample
 import pywikibot
 from pywikibot.data import api
 
-# The follow attributes are used by eval()
+# The following attributes are used by eval()
 from pywikibot.login import LoginStatus  # noqa: F401
 from pywikibot.page import User  # noqa: F401
 from pywikibot.site import APISite, ClosedSite, DataSite  # noqa: F401
